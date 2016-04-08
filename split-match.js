@@ -36,7 +36,9 @@ PatternMatch.prototype._transform = function (chunk, encoding, getNextChunk) {
 };
 
 PatternMatch.prototype._flush = function (flushCompleted) {
-
+	if(this._lastlineData) this.push(this._lastLineData)
+	this._lastLineData = null
+	flushCompleted()
 };
 
 program
