@@ -21,18 +21,20 @@ PatternMatch.prototype._transform = function (chunk, encoding, getNextChunk) {
 	var lines = data.split(program.pattern);
 	var lines2 = [];
 	var lines3 = [];
-
-	lines.forEach(function (element, index, array) {
-		lines2.push(element.split(program.pattern2).forEach(function (element, index, array) {
-				lines3.push(element);
-			})) 
-	});
-	this._lastLineData = lines.splice(lines2.length-1,1)[0];
+	if(program.pattern2 != null) {
+		lines.forEach(function (element, index, array) {
+			lines2.push(element.split(program.pattern2).forEach(function (element, index, array) {
+					lines3.push(element);
+				})) 
+		});
+	lines = lines3;
+	}
+	this._lastLineData = lines.splice(lines.length-1,1)[0];
 	lines.forEach(this.push.bind(this));
 	console.log("---------------------INPUT----------------------------");
 	console.log(data);
 	console.log("---------------------OUTPUT---------------------------");
-	console.log(lines3);
+	console.log(lines);
 };
 
 PatternMatch.prototype._flush = function (flushCompleted) {
